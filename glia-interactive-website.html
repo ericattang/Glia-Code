@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glia - From Curiosity to Deep Learning</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+        }
+        #colorBackground {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+        }
+        .gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5;
+            transition: all 120s linear;
+        }
+        #gradient1 { background: radial-gradient(circle at top left, #FFA551, transparent 70%); }
+        #gradient2 { background: radial-gradient(circle at top right, #FFA6E6, transparent 70%); }
+        #gradient3 { background: radial-gradient(circle at bottom left, #FFF27A, transparent 70%); }
+        #gradient4 { background: radial-gradient(circle at bottom right, #41FFC6, transparent 70%); }
+        #gradient5 { background: radial-gradient(circle at center, #FFA6E6, transparent 70%); }
+        #blackOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            pointer-events: none;
+        }
+        #spotlight {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, transparent 0%, black 70%);
+            pointer-events: none;
+            mix-blend-mode: lighten;
+        }
+        #flowerContainer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .petal {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        #seedContainer {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .seed {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        #aboutPage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        #aboutContent {
+            color: white;
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="colorBackground">
+        <div id="gradient1" class="gradient"></div>
+        <div id="gradient2" class="gradient"></div>
+        <div id="gradient3" class="gradient"></div>
+        <div id="gradient4" class="gradient"></div>
+        <div id="gradient5" class="gradient"></div>
+    </div>
+    <div id="blackOverlay"></div>
+    <div id="spotlight"></div>
+    <div id="flowerContainer"></div>
+    <div id="seedContainer"></div>
+    <div id="aboutPage">
+        <div id="aboutContent">
+            <h1>About Glia</h1>
+            <p>Your journey from curiosity to deep learning starts here.</p>
+        </div>
+    </div>
+
+    <script>
+        const colorBackground = document.getElementById('colorBackground');
+        const spotlight = document.getElementById('spotlight');
+        const flowerContainer = document.getElementById('flowerContainer');
+        const seedContainer = document.getElementById('seedContainer');
+        const aboutPage = document.getElementById('aboutPage');
+        let isAboutPageVisible = false;
+
+        // Color animation
+        const gradients = document.querySelectorAll('.gradient');
+        const initialColors = ['#FFA551', '#FFA6E6', '#FFF27A', '#41FFC6', '#FFA6E6'];
+        const targetColors = ['#FFE0B2', '#41FFC6', '#FFA6E6', '#FFF27A', '#FFA551'];
+
+        function animateColors() {
+            gradients.forEach((gradient, index) => {
+                gradient.style.background = `radial-gradient(circle at ${getPosition(index)}, ${targetColors[index]}, transparent 70%)`;
+            });
+
+            setTimeout(() => {
+                gradients.forEach((gradient, index) => {
+                    gradient.style.background = `radial-gradient(circle at ${getPosition(index)}, ${initialColors[index]}, transparent 70%)`;
+                });
+                setTimeout(animateColors, 120000);
+            }, 120000);
+        }
+
+        function getPosition(index) {
+            switch(index) {
+                case 0: return 'top left';
+                case 1: return 'top right';
+                case 2: return 'bottom left';
+                case 3: return 'bottom right';
+                case 4: return 'center';
+            }
+        }
+
+        animateColors();
+
+        // Spotlight effect
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            spotlight.style.left = `${x - 100}px`;
+            spotlight.style.top = `${y - 100}px`;
+        });
+
+        // Flower animation
+        function createFlower() {
+            for (let i = 0; i < 8; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                flowerContainer.appendChild(petal);
+            }
+        }
+
+        function animateFlower() {
+            const petals = document.querySelectorAll('.petal');
+            petals.forEach((petal, index) => {
+                const angle = (index / petals.length) * Math.PI * 2;
+                const radius = 30 + Math.sin(Date.now() / 1000) * 10;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+                
+                petal.style.transform = `translate(${x}px, ${y}px)`;
+                petal.style.backgroundColor = initialColors[index % initialColors.length];
+                petal.style.opacity = '1';
+            });
+            requestAnimationFrame(animateFlower);
+        }
+
+        createFlower();
+        animateFlower();
+
+        // Sparkle and seed animation
+        document.addEventListener('click', (e) => {
+            if (!isAboutPageVisible) {
+                createSparkle(e.clientX, e.clientY);
+                createSeed(e.clientX, e.clientY);
+            }
+            toggleAboutPage();
+        });
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'seed';
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            sparkle.style.backgroundColor = initialColors[Math.floor(Math.random() * initialColors.length)];
+            seedContainer.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1000);
+        }
+
+        function createSeed(x, y) {
+            const seed = document.createElement('div');
+            seed.className = 'seed';
+            seed.style.left = `${x}px`;
+            seed.style.top = `${y}px`;
+            seedContainer.appendChild(seed);
+
+            let posY = y;
+            function dropSeed() {
+                posY += 2;
+                seed.style.top = `${posY}px`;
+                if (posY < window.innerHeight) {
+                    requestAnimationFrame(dropSeed);
+                } else {
+                    growPlant(seed);
+                }
+            }
+            dropSeed();
+        }
+
+        function growPlant(seed) {
+            let height = 5;
+            function animate() {
+                height += 0.5;
+                seed.style.height = `${height}px`;
+                seed.style.backgroundColor = initialColors[Math.floor(Math.random() * initialColors.length)];
+                if (height < 50) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            animate();
+        }
+
+        // About page toggle
+        function toggleAboutPage() {
+            isAboutPageVisible = !isAboutPageVisible;
+            aboutPage.style.opacity = isAboutPageVisible ? '1' : '0';
+            aboutPage.style.pointerEvents = isAboutPageVisible ? 'auto' : 'none';
+        }
+    </script>
+</body>
+</html>

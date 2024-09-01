@@ -101,12 +101,14 @@ body, html {
 #aboutContent h1 {
     font-weight: 300; /* Light weight for "About" */
     font-family: 'Cormorant Garamond', serif;
+    text-align: center;
     font-size: 60px; /* Example size for the title */
 }
 
 #aboutContent p {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300; /* Light weight for body text */
+    text-align: center;
     font-size: 40px; /* Example size for the body text */
 }
 

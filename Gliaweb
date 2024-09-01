@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glia - From Curiosity to Deep Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="colorBackground">
+        <div id="gradient1" class="gradient"></div>
+        <div id="gradient2" class="gradient"></div>
+        <div id="gradient3" class="gradient"></div>
+        <div id="gradient4" class="gradient"></div>
+        <div id="gradient5" class="gradient"></div>
+    </div>
+    <div id="blackOverlay"></div>
+    <div id="spotlight"></div>
+    <div id="flowerContainer"></div>
+    <div id="seedContainer"></div>
+    <div id="aboutPage">
+        <div id="aboutContent">
+            <h1>About Glia</h1>
+            <p>Your journey from curiosity to deep learning starts here.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

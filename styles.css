@@ -98,11 +98,16 @@ body, html {
     transition: opacity 0.5s ease;
 }
 
-#aboutContent {
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    font-weight: 300; /* Regular light weight for content */
+#aboutContent h1 {
+    font-weight: 300; /* Light weight for "About" */
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px; /* Example size for the title */
+}
+
+#aboutContent p {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; /* Light weight for body text */
+    font-size: 40px; /* Example size for the body text */
 }
 
 #aboutContent .italic {
